@@ -69,6 +69,11 @@ pub extern "C" fn _start(argc: usize, argv: usize) -> ! {
     exit(main(argc, v.as_slice()));
 }
 
+/* 启用弱链接特性.
+ * weak 目前没找到确切的文档, 但是大致的作用为, 如果编译模块中还有
+ * 其它 main 符号, 则会覆盖此函数. 否则也可以编译通过, 但是运行会
+ * 触发 panic.
+ */
 #[linkage = "weak"]
 #[no_mangle]
 fn main(_argc: usize, _argv: &[&str]) -> i32 {
